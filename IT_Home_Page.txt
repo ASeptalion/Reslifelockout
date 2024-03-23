@@ -1,0 +1,142 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style type="text/css">
+        a
+        {
+            color:#151f6d;
+        }
+        .title
+        {
+            font-weight:700;
+            font-size:large;
+            color:red;
+        }
+        .r
+        {
+            color:red;
+        }
+        #body {
+            width:85%;
+            margin:0 auto;
+        }
+        .center {
+            text-align:center;
+        }
+        h3{
+            margin:5px 20px;
+        }
+        #body img 
+        {
+            height:350px;
+            width:470px;
+        }
+    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+	Information Technology
+</title>
+<style type="text/css">
+	/* <![CDATA[ */
+	#meMain { background-color:#C8102E;border-style:Groove; }
+	#meMain img.icon { border-style:none;vertical-align:middle; }
+	#meMain img.separator { border-style:none;display:block; }
+	#meMain img.horizontal-separator { border-style:none;vertical-align:middle; }
+	#meMain ul { list-style:none;margin:0;padding:0;width:auto; }
+	#meMain ul.static { padding:5px 10px 5px 10px; }
+	#meMain ul.dynamic { z-index:1; }
+	#meMain a { color:White;text-decoration:none;white-space:nowrap;display:block; }
+	#meMain a.static { padding:0px 20px 0px 20px;font-size:Large;text-decoration:none; }
+	#meMain a.popout { background-image:url("/it/userservices/openlab/WebResource.axd?d=YAYach_zykzn7tRotFpEUlHQNOOymhqp-g7XtkKVSTIFZ1qDbjqMsyx3uBCkqwK-2zbecVYJL_eZ1NA4eSAcrF5lrNWgJMepHLNycRNNA4U1&t=638403408857838717");background-repeat:no-repeat;background-position:right center;padding-right:14px; }
+	#meMain a.dynamic { background-color:#BD0F2E;padding:5px 5px 5px 5px;text-decoration:none; }
+	#meMain a.static.highlighted { color:Black; }
+	#meMain a.dynamic.highlighted { background-color:Black; }
+	/* ]]> */
+</style></head>
+<body>
+    <form method="post" action="./Lab_Asst_Msg.aspx" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="azA5y3e4Zy2POJHc6Tnk5cuGiunLOuvafSsA+KH1HSyCVitekrB7YgtPw1wPV/98WAJid+WgQRKJacHtTwTOiK9nUPz0Ld7JfGrzKvfrTyrVSqpDOXSzQWWAR9sM5bdnq43mCJwMFQQlmA7AaXzcKV74bVw6K62v/YQsC0u7leE7T/VmfI9+tVgupP7pYFS4jPKWBlrrjGqbAyEE1j37gsDLe2f1FeSfc0TcPmRZUWMHyoHlDHHQ+APSpOxWRQdteD3Sot39uLnXBF88ciG1td2szI7x+hvPcDhzC0cS+3nlLxCdQW/fAg2bsRuUx0zK3NubNSpC+SrNUl23tlrYutRa74If7TvkrO0EYUPzEFbNLMshcoE8naCR0dddt9ffyzYUhc4Ta/Ls61PHo7rbaV2CuPdZn3OqAFygYHbpcR4JvMOzvalCJ/S2nqd4OPko" />
+</div>
+
+
+<script src="/it/userservices/openlab/WebResource.axd?d=fqV81KWLWhVg-lLAb4IT6-j2NdLUHk4B-QQR6d4bq1kbx4m48Zc0NH0CzVEUbDo5LNKxpIThqW__ZCuBF2emj7faXD20Whkj7ImYLM0eJ6k1&amp;t=638403408857838717" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="600004B7" />
+	<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+	<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="hj4jY36TcefzNZI0/u7aFXAYKei7Op9ZsTfiRJwS4gjwAGwZuNeJzi8JKFh5p4/I+E+M5JxKcFXcec3uhGFuJ8CWyO9WGg6BG2ZW7MQK062yTUNJpM9vCeRRLJ/yPKSfAB5orp+O4aJrFWRoLhTlKCRuDysxZcPj2vWhzo5vdeglhujOQGFO9tBPcpZ+0b1d" />
+</div>
+    <div style="width:99%;">
+         <img id="top" src="Images/audiencenav_head_new_color.jpg" style="height:67px;width:100%;" />
+        <br />
+        <br />
+        <img id="logo" src="Images/brand-logo-web.png" />
+        <br />
+        <br />
+        <span id="title" style="display:inline-block;color:White;background-color:#C8102E;border-color:#C8102E;border-width:10px;border-style:solid;font-size:XX-Large;font-weight:bold;width:100%;">Information Technology / Lab Assistant</span>
+            <a href="#meMain_SkipLink" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Skip Navigation Links</a><div id="meMain">
+	<ul class="level1">
+		<li><a class="level1" href="Home_Login.aspx">Log Out</a></li><li><a class="level1" href="Lab_Asst_Msg.aspx">Message Page</a></li><li><a class="level1" href="Lab_Asst_Info.aspx">Employee List</a></li><li><a class="popout level1" href="#" onclick="__doPostBack(&#39;ctl00$meMain&#39;,&#39;AS_Clock_sys&#39;)">Clock In/Out System</a><ul class="level2">
+			<li><a class="level2" href="Lab_Asst_Clock.aspx">Clock In/out</a></li><li><a class="level2" href="Lab_Asst_Clock_View.aspx">Timesheet View</a></li>
+		</ul></li><li><a class="popout level1" href="#" onclick="__doPostBack(&#39;ctl00$meMain&#39;,&#39;AS_Schedule&#39;)">Schedule</a><ul class="level2">
+			<li><a class="level2" href="https://www.whentowork.com/logins.htm">WhenToWork Login</a></li><li><a class="level2" href="Home_Application.aspx">New Application</a></li><li><a class="level2" href="Lab_Asst_Payroll.aspx">Payroll Schedule</a></li>
+		</ul></li><li><a class="popout level1" href="#" onclick="__doPostBack(&#39;ctl00$meMain&#39;,&#39;AS_Reprot&#39;)">Report</a><ul class="level2">
+			<li><a class="level2" href="Lab_Asst_Report_Clock.aspx">Clock Report</a></li><li><a class="level2" href="Lab_Asst_Report_Incident.aspx">Incident Report</a></li><li><a class="level2" href="Lab_Asst_Report_Print_Refund.aspx">Print Refund Report</a></li>
+		</ul></li><li><a class="level1" href="Shutdown_Utility.aspx">Shutdown Utility</a></li><li><a class="level1" href="Lab_Asst_Voting.aspx">Voting Form</a></li><li><a class="popout level1" href="#" onclick="__doPostBack(&#39;ctl00$meMain&#39;,&#39;Lab_Asst_Photos&#39;)">Awards Photos</a><ul class="level2">
+			<li><a class="level2" href="Lab_Asst_Photo_2013F.aspx">2013 Fall Photos</a></li><li><a class="level2" href="Lab_Asst_Photo_2014S.aspx">2014 Spring Photos</a></li><li><a class="level2" href="Lab_Asst_Photo_2014F.aspx">2014 Fall Photos</a></li><li><a class="level2" href="Lab_Asst_Photo_2015S.aspx">2015 Spring Photos</a></li><li><a class="level2" href="Lab_Asst_Photo_2015F.aspx">2015 Fall Photos</a></li><li><a class="level2" href="Lab_Asst_Photo_2016S.aspx">2016 Spring Photos</a></li><li><a class="level2" href="Lab_Asst_Photo_2016F.aspx">2016 Fall Photos</a></li>
+		</ul></li>
+	</ul>
+</div><a id="meMain_SkipLink"></a>
+        
+    <div id="body">
+        <h1 class="center">Message Page</h1>
+        <h2 class="center">Welcome to Lab Assistant System</h2>
+        
+        <div>
+	<table cellspacing="0" rules="all" border="1" id="PageInfo_gvMsg" style="border-style:None;width:75%;border-collapse:collapse;margin:0 auto">
+		<tr>
+			<th scope="col" style="border-style:None;">&nbsp;</th><th scope="col" style="border-style:None;">&nbsp;</th>
+		</tr><tr>
+			<td style="border-style:None;width:10%;">1</td><td style="border-style:None;">When completing a Time Clock Report, choose the time in military or 24 hour format.</td>
+		</tr>
+	</table>
+</div>
+    </div>
+    <p></p>
+
+
+        <footer>
+        
+        <span style="display:inline-block;color:White;background-color:Black;border-color:Black;border-width:5px;border-style:Solid;width:100%;">Department of Information Technology</span>
+        <span style="display:inline-block;color:White;background-color:Black;border-color:Black;border-width:5px;border-style:Solid;width:100%;">One University Plaza, MS 4225</span>
+        <span style="display:inline-block;color:White;background-color:Black;border-color:Black;border-width:5px;border-style:Solid;width:100%;">Cape Girardeau, MO 63701</span>
+        
+        </footer>
+
+    </div>
+    
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script type='text/javascript'>new Sys.WebForms.Menu({ element: 'meMain', disappearAfter: 500, orientation: 'horizontal', tabIndex: 0, disabled: false });</script></form>
+</body>
+</html>
