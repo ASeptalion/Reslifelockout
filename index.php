@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Desk Worker Sign In Page</h1>
+    <h1>Residence Life</h1>
 
     <form action="authenticate_desk_worker.php" method="post">
         <label for="desk_worker_username">Username:</label>
