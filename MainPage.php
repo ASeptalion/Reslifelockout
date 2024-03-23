@@ -4,39 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Home</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
-        }
-
-        .log-lockout {
-            width: 200px;
-            height: 200px;
-            background-color: #007bff;
-            color: #fff;
-            text-align: center;
-            line-height: 200px;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .log-lockout:hover {
-            background-color: #0056b3;
-        }
+   
     </style>
 </head>
 
@@ -44,13 +15,13 @@
     <header>
         <h1>Welcome, <span id="logged-in-user">John Doe</span>!</h1>
     </header>
-
+    <a href="LockoutCreate.php">
     <div class="container">
         <div class="log-lockout">
-            <a href="LockoutCreate.php"/>Log a Lockout</a>
+        Log a Lockout
         </div>
     </div>
-
+</a>
     <script>
         // Replace this script with actual user authentication logic
         document.getElementById('logged-in-user').innerText = "John Doe";

@@ -19,7 +19,7 @@
         <label for="desk_worker_password">Password:</label>
         <input type="password" id="desk_worker_password" name="desk_worker_password" required>
 
-        <button type="submit">Sign In as Desk Worker</button>
+        <button type="submit">Sign In</button>
     </form>
 
     <script>

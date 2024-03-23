@@ -1,13 +1,13 @@
-
 body {
     font-family: Arial, sans-serif;
     background-color: #ffffff; /* white background */
-    color: #ff0000; /* red text color */
+    color: #000000; /* black text color */
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
 }
 
@@ -16,40 +16,96 @@ h1 {
 }
 
 form {
-    width: 300px;
+    max-width: 600px;
+    width: 90%;
     padding: 20px;
-    border: 2px solid #ff0000; /* red border */
+    border: 2px solid #df2f2f; /* blue border */
     border-radius: 10px;
     background-color: #ffffff; /* white background */
 }
 
 label {
     display: block;
-    margin-bottom: 10px;
-    color: #ff0000; /* red text color */
+    margin-bottom: 8px;
+    color: #000000; /* black text color */
 }
 
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ff0000; /* red border */
-    border-radius: 5px;
+input,
+select,
+textarea {
+    width: calc(100% - 16px);
+    padding: 8px;
+    margin-bottom: 16px;
     box-sizing: border-box;
 }
 
-button[type="submit"] {
+input[type="radio"],
+input[type="checkbox"] {
+    margin-bottom: 0;
+}
+
+button {
     width: 100%;
     padding: 10px;
-    background-color: #ff0000; /* red background */
+    background-color: #ff0000; 
+    color: #ffffff; 
     border: none;
-    border-radius: 5px;
-    color: #ffffff; /* white text color */
-    font-size: 16px;
     cursor: pointer;
 }
 
-button[type="submit"]:hover {
-    background-color: #cc0000; /* darker red on hover */
+button:hover {
+    background-color: #5a0909; 
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #ff0000;
+    color: #000000;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.log-lockout {
+    width: 200px;
+    height: 200px;
+    background-color: #ff0000;
+    color: #000000;
+    text-align: center;
+    line-height: 200px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.log-lockout:hover {
+    background-color: #4f0b0b;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #ff0000;
+    color: #fff;
 }
