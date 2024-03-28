@@ -1,12 +1,9 @@
 <?php
   require_once('Connections/ResLife.php');
   session_start();
-  // if(isset($_SESSION['username']))
-  //   header('Location: MainPage.php');
-  // }
-  // else{
-  //   header('Location: index.php?reason="login"');
-  // }
+  if(isset($_SESSION['username'])){
+    header('Location: MainPage.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,7 +106,12 @@
                 url: 'AJAX/LogIn.php',
                 data: formData,
                 success: function(res){
-                  alert(res);
+                  if(res == "success"){
+                    window.location="MainPage.php";
+                  }
+                  else{
+                    alert("Invalid");
+                  }
 
                 },
                 error: function(xhr, status, error){
