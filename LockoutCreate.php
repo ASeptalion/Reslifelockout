@@ -138,6 +138,23 @@ input[type="password"] {
     height:168%;
     margin: 0 auto; /* Center the form */
 }
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #8a1f28;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #75191f;
+}
 </style>
 </head>
 <body>
@@ -145,6 +162,8 @@ input[type="password"] {
 <div class="red-block">
     <button onclick="location.href='AJAX/Logout.php'" id="logoutBtn" class="function-button logout-button">Logout</button>
 </div>
+
+<button class="back-button" onclick="history.back()">Back</button>
 
 
 <div class="image-row">
