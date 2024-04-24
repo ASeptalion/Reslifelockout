@@ -233,7 +233,12 @@ input[type="password"] {
               data: formData,
               dataType: 'text',
               success: function(res) {
-                  alert(res);
+                  if(res == "Complete"){
+                    window.location.reload();
+                  }
+                  else{
+                    alert(res);
+                  }
               },
               complete: function() {
                   // Schedule the next request when the current one has been completed
