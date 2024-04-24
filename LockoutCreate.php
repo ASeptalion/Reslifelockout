@@ -158,7 +158,7 @@ input[type="password"] {
 
 <div class="login-container">
   <div class="form-wrapper">
-  <form action="process_lockout.php" method="post">
+    <form id="myForm" action="process_lockout.php" method="post">
       <label for="full-name">Full Name:</label>
       <input type="text" id="full-name" name="full-name" required>
 
@@ -166,16 +166,19 @@ input[type="password"] {
       <input type="text" id="s0-number" name="s0-number" required>
 
       <label>Is this a replacement key?</label><br><br>
-      <label><input type="radio" name="replacement-key" value="yes"> Yes</label>
-      <label><input type="radio" name="replacement-key" value="no" checked> No</label>
+      <label><input type="radio" name="replacement-key" value="1"> Yes</label>
+      <label><input type="radio" name="replacement-key" value="0" checked> No</label>
       <br><br>
+
+      <label for="building">Building:</label>
+      <input type="text" id="building" name="building" required>
 
       <label for="room-number">Room Number:</label>
       <input type="text" id="room-number" name="room-number" required>
 
       <label>Check In or Check Out?</label><br><br>
-      <label><input type="radio" name="check-type" value="check-in" checked> Check In</label>
-      <label><input type="radio" name="check-type" value="check-out"> Check Out</label><br><br>
+      <label><input type="radio" name="check-type" value="1" checked> Check In</label>
+      <label><input type="radio" name="check-type" value="0"> Check Out</label><br><br>
 
       <label for="key-card-number">Key Card Number:</label>
       <input type="text" id="key-card-number" name="key-card-number" required>
@@ -186,9 +189,60 @@ input[type="password"] {
       <label for="additional-comments">Additional Comments:</label><br><br>
       <textarea id="additional-comments" name="additional-comments" rows="7" cols="70"></textarea>
 
-      <button type="submit" id="SubmitButton">Submit</button>
+      <button type="button" id="submitButton">Submit</button>
       <br><br>
   </form>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+  $(document).ready(function(){
+      $('#submitButton').click(function(){
+        var s0Number = document.getElementById("s0-number").value.trim();
+          if (!/^\d{7}$/.test(s0Number)) {
+              alert("S0 Number must be exactly 7 digits.");
+              return;
+          }
+
+          // Validate other fields
+          var fullName = document.getElementById("full-name").value.trim();
+          var building = document.getElementById("building").value.trim();
+          var roomNumber = document.getElementById("room-number").value.trim();
+          var raName = document.getElementById("ra-name").value.trim();
+          var keycardnumber = document.getElementById("key-card-number").value.trim();
+
+          if (fullName === "" || building === "" || roomNumber === "" || raName === "" || keycardnumber === "") {
+              alert("Please fill out all required fields.");
+              return;
+          }
+
+          var formData = {
+              full_name: $('#full-name').val(),
+              s0_number: $('#s0-number').val(),
+              replacement_key: $('input[name=replacement-key]:checked').val(),
+              building: $('#building').val(),
+              room_number: $('#room-number').val(),
+              check_type: $('input[name=check-type]:checked').val(),
+              key_card_number: $('#key-card-number').val(),
+              ra_name: $('#ra-name').val(),
+              additional_comments: $('#additional-comments').val()
+          };
+
+          $.ajax({
+              url: 'AJAX/LockoutSubmit.php',
+              type: 'POST',
+              data: formData,
+              dataType: 'text',
+              success: function(res) {
+                  alert(res);
+              },
+              complete: function() {
+                  // Schedule the next request when the current one has been completed
+                  setTimeout(ajaxInterval, 4000);
+              }
+          });
+      });
+  });
+  </script>
 </div>
 </div>
 
