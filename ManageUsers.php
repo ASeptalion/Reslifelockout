@@ -56,11 +56,14 @@ body {
 }
 .login-container {
     margin: 0 auto;
-    width: 500px;
+    width: 97%;
     height:150px;
     text-align: center;
     margin-top: 20px;
     padding:30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
 }
 input[type="text"],
 input[type="password"] {
@@ -100,14 +103,6 @@ input[type="password"] {
     width: 150px; /* Adjust button width */
     box-sizing: border-box; /* Ensure padding and border included in width */
 }
-
-.login-container {
-    text-align: left; /* Align buttons left */
-    display: grid; /* Change display to grid */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Dynamic grid layout */
-    gap: 10px; /* Add gap between grid items */
-}
-
 .action-buttons {
     display: flex;
     align-items: center;
@@ -140,7 +135,8 @@ input[type="password"] {
 }
 
 table {
-    width: 100%;
+    margin-left:130%;
+    width: 800px;
     border-collapse: collapse;
 }
 
@@ -148,7 +144,7 @@ th, td {
     padding: 24px;
     text-align: center; /* Center align column names */
     border-bottom: 1px solid #ddd;
-    
+
 }
 
 th {
@@ -162,14 +158,19 @@ th {
 th:nth-child(1) {
     width: 70%; /* Adjust the width as needed */
 }
-
+.logout-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    float: right;
+}
 </style>
 </head>
 <body>
 
-<div class="red-block">
-    <button onclick="location.href='AJAX/Logout.php'" id="logoutBtn" class="function-button logout-button">Logout</button>
-</div>
+  <div class="red-block">
+      <button onclick="location.href='AJAX/Logout.php'" id="logoutBtn" class="function-button logout-button">Logout</button>
+  </div>
 
 
 <div class="image-row">
@@ -186,14 +187,14 @@ th:nth-child(1) {
 
 
 <div class="login-container">
-   
+
 
     <table>
         <thead>
             <tr>
-                <th style="width: 60%;">User</th> <!-- Adjust width for more room -->
-                <th style="width: 30%;">Role</th> <!-- Adjust width for more room -->
-                <th style="width: 30%;">Action</th> <!-- Adjust width for more room -->
+                <th>User</th> <!-- Adjust width for more room -->
+                <th>Role</th> <!-- Adjust width for more room -->
+                <th>Action</th> <!-- Adjust width for more room -->
             </tr>
         </thead>
         <tbody>
