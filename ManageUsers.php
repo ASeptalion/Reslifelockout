@@ -181,6 +181,31 @@ th:nth-child(1) {
 .back-button:hover {
     background-color: #75191f;
 }
+
+.PopWindow {
+    position:absolute;
+    z-index:10;
+    top:5%;
+    left:20%;
+    padding:5px;
+    display:none;
+    font-family: "IntroHead";
+    width:700px;
+    height:450px;
+    /*overflow-y:scroll;*/
+    border:2px solid #000;
+    border-radius:20px;
+    background-color:#c0ded0;
+    box-shadow: 5px 10px rgba(48, 48, 48, 0.6);
+    padding:20px;
+}
+.close{
+    float:right;
+    font-size:30pt;
+    padding-right:20px;
+    margin-top:-40px;
+    cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -229,7 +254,7 @@ th:nth-child(1) {
                 <td>Jane Smith</td>
                 <td>User</td>
                 <td class="action-buttons">
-                    <button class="action-button" onclick="editUser('Jane Smith')">Edit</button>
+                    <button class="action-button" onClick="document.getElementById('HealthAlert').style.display='initial'">Edit</button>
                     <button class="action-button" onclick="deleteUser('Jane Smith')">Delete</button>
                     <button class="action-button" onclick="changePassword('Jane Smith')">Change Password</button>
                 </td>
@@ -260,6 +285,62 @@ th:nth-child(1) {
 <div class="black-row"></div>
 
 <button class="back-button" onclick="history.back()">Back</button>
+
+<div id="HealthAlert" class="PopWindow" style="display:none;z-index:11;background-color:#FFFFFF;height:70%;width:50%;left:25%;top:15%;position:fixed;">
+    <div class="popup">
+        <div class="close" onClick="document.getElementById('HealthAlert').style.display='none'">x</div>
+        <div class="content">
+            <h2 id="HealthAlertTitle">Edit<br/></h2>
+        </div>
+        <div class="content" id="HealthAlertWords" style="font-size:23px;color:black">
+            Edit username, role, main building, new password, and confirm password here
+        </div>
+        <div style="margin-top: 20px;">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" style="margin-left: 10px;">
+        </div>
+        <div style="margin-top: 20px;">
+            <label for="password">New Password:</label>
+            <input type="password" id="password" name="password" style="margin-left: 10px;">
+        </div>
+        <div style="margin-top: 20px;">
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" style="margin-left: 10px;">
+        </div>
+        <div style="margin-top: 20px;">
+            <label for="role">Role:</label>
+            <select id="role" name="role" style="margin-left: 10px;">
+                <option value="Admin">Admin</option>
+                <option value="HD">HD</option>
+                <option value="RA">RA</option>
+            </select>
+        </div>
+        <div style="margin-top: 20px;">
+            <label for="building">Main Building:</label>
+            <select id="building" name="building" style="margin-left: 10px;">
+                <option value="Towers & Greek">Towers & Greek</option>
+                <option value="Laferla">Laferla</option>
+                <option value="Merick">Merick</option>
+                <option value="Vandiver">Vandiver</option>
+                <option value="River">River</option>
+                <option value="Towers East">Towers East</option>
+                <option value="Towers North">Towers North</option>
+                <option value="Towers South">Towers South</option>
+                <option value="Towers West">Towers West</option>
+                <option value="Greek">Greek</option>
+            </select>
+        </div>
+        <div style="margin-top: 20px;">
+            <button onclick="saveUserInfo()">Save</button>
+        </div>
+        <img id="HealthQuestion" onClick="document.getElementById('QuestionInfo').style.display='initial'" style='display:none;' src="Images/RR_Art/WebsitePages/Icons/QuestionMark.png" width="50px"/>
+    </div>
+</div>
+
+
+
+
+</div>
 
 </body>
 </html>
