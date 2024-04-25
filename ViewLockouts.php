@@ -265,7 +265,13 @@ table tr:nth-child(even) {
         <tbody>
             <?php
             // Query the Lockouts table
-            $sql = "SELECT * FROM Lockouts WHERE Building = '$Building'";
+            if($Position != "Admin"){
+              $sql = "SELECT * FROM Lockouts WHERE Building = '$Building'";
+            }
+            else{
+              $sql = "SELECT * FROM Lockouts";
+            }
+
             $result = mysqli_query($con, $sql);
 
             // Output data of each row
