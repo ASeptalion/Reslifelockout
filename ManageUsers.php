@@ -34,7 +34,7 @@ body {
 .red-block {
     background-color: red;
     width: 100%;
-    height: 50px;
+    height: 80px;
 }
 .image-row {
     display: flex;
@@ -247,7 +247,7 @@ th:nth-child(1) {
                 <td class="action-buttons">
                     <button class="action-button" onclick="editUser('John Doe')">Edit</button>
                     <button class="action-button" onclick="deleteUser('John Doe')">Delete</button>
-                    
+
                 </td>
             </tr>
             <tr>
@@ -256,7 +256,7 @@ th:nth-child(1) {
                 <td class="action-buttons">
                     <button class="action-button" onClick="document.getElementById('HealthAlert').style.display='initial'">Edit</button>
                     <button class="action-button" onclick="deleteUser('Jane Smith')">Delete</button>
-                  
+
                 </td>
             </tr>
             <!-- Add more users as needed -->
@@ -349,7 +349,7 @@ th:nth-child(1) {
 
 <script>
     var passwordFieldsVisible = false; // Track if password fields are visible
-    
+
     function togglePasswordFields() {
         var passwordFields = document.getElementById("passwordFields");
         if (passwordFields.style.display === "none") {
@@ -364,23 +364,23 @@ th:nth-child(1) {
             passwordFieldsVisible = false; // Set the flag to false when password fields are not visible
         }
     }
-    
+
     function saveUserInfo(event) {
         event.preventDefault(); // Prevent the default form submission behavior
-        
+
         var username = document.getElementById("username").value;
         var role = document.getElementById("role").value;
         var building = document.getElementById("building").value;
-        
+
         var password = "";
         var confirm_password = "";
-        
+
         // Check if password fields are visible and only then validate passwords
         if (passwordFieldsVisible) {
             password = document.getElementById("password").value;
             confirm_password = document.getElementById("confirm_password").value;
         }
-        
+
         // Check if password and confirm password are not empty and match
         if ((password !== "" && confirm_password !== "") && (password === confirm_password)) {
             // Perform your save action here, including sending data to the server
@@ -388,7 +388,7 @@ th:nth-child(1) {
             console.log("Role:", role);
             console.log("Building:", building);
             console.log("Password:", password);
-            
+
             // Reset password fields
             document.getElementById("password").value = "";
             document.getElementById("confirm_password").value = "";
