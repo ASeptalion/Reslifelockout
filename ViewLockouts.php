@@ -18,17 +18,6 @@ $row_UserInfo = mysqli_fetch_assoc($result_UserInfo);
 
 $Position = $row_UserInfo['Position'];
 $Building = $row_UserInfo['MainBuilding'];
-
-if (isset($_POST['rowId'])) {
-    $rowId = $_POST['rowId'];
-
-    // Update the database
-    $query = "UPDATE Lockouts SET Processed = 1 WHERE id = ?";
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("i", $rowId);
-    $stmt->execute();
-    $stmt->close();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -199,24 +188,30 @@ table td {
 table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
-
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #8a1f28;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
+.PopWindow {
+    position:absolute;
+    z-index:10;
+    top:5%;
+    left:20%;
+    padding:5px;
+    display:none;
+    font-family: "IntroHead";
+    width:700px;
+    height:450px;
+    /*overflow-y:scroll;*/
+    border:2px solid #000;
+    border-radius:20px;
+    background-color:#c0ded0;
+    box-shadow: 5px 10px rgba(48, 48, 48, 0.6);
+    padding:20px;
 }
-
-.back-button:hover {
-    background-color: #75191f;
+.close{
+    float:right;
+    font-size:30pt;
+    padding-right:20px;
+    margin-top:-40px;
+    cursor:pointer;
 }
-
 </style>
 </head>
 <body>
@@ -239,6 +234,27 @@ table tr:nth-child(even) {
 
 
 <div class="login-container">
+  <div id="HealthAlert" class="PopWindow" style="display:none; z-index:11; background-color:#FFFFFF; height:70%; width:50%; left:25%; top:15%; position:fixed;">
+    <div class="popup">
+        <div class="close" onClick="document.getElementById('HealthAlert').style.display='none'">x</div>
+        <div class="content">
+            <h2 id="HealthAlertTitle">Edit Submission</h2>
+            <input type="text" id="FullNameInput" placeholder="Full Name">
+            <input type="text" id="S0NumberInput" placeholder="S0 Number">
+            <input type="text" id="IsReplacementInput" placeholder="Is Replacement">
+            <input type="text" id="BuildingInput" placeholder="Building">
+            <input type="text" id="RoomNumberInput" placeholder="Room Number">
+            <input type="text" id="IsCheckOutInput" placeholder="Is Check Out">
+            <input type="text" id="KeyCardNumInput" placeholder="Key Card Number">
+            <input type="text" id="RecordedByInput" placeholder="Recorded By">
+            <textarea id="CommentsInput" style="width: 100%; height: 100px;" placeholder="Additional Comments"></textarea>
+            <button onclick="submitEdit()">Submit Edit</button>
+        </div>
+    </div>
+</div>
+
+
+
 
   <table id="lockoutTable">
       <thead>
@@ -274,7 +290,7 @@ table tr:nth-child(even) {
               Additional Comments <span id="sortIcon9"></span>
             </th>
             <th>
-                Completed
+                Actions
             </th>
 
           </tr>
@@ -283,10 +299,10 @@ table tr:nth-child(even) {
             <?php
             // Query the Lockouts table
             if($Position != "Admin"){
-              $sql = "SELECT * FROM Lockouts WHERE Building = '$Building'";
+              $sql = "SELECT * FROM Lockouts WHERE Building = '$Building' AND Processed = 0";
             }
             else{
-              $sql = "SELECT * FROM Lockouts";
+              $sql = "SELECT * FROM Lockouts WHERE Processed = 0";
             }
 
             $result = mysqli_query($con, $sql);
@@ -307,7 +323,9 @@ table tr:nth-child(even) {
                     echo "<td>" . $row["Comments"] . "</td>";
                     ?>
                     <td>
-                        <input type="checkbox" class="completed-checkbox" data-rowid="<?php echo $row['ID']; ?>">
+                        <input type="checkbox" class="completed-checkbox" data-rowid="<?php echo $row['id']; ?>"> &nbsp;&nbsp;&nbsp;&nbsp
+                        <button onclick="openEditPopup('<?php echo $row['id']; ?>', '<?php echo $row['FullName']; ?>', '<?php echo $row['S0_Number']; ?>', '<?php echo $row['isReplacement']; ?>', '<?php echo $row['Building']; ?>', '<?php echo $row['RoomNumber']; ?>', '<?php echo $row['isCheckOut']; ?>', '<?php echo $row['KeyCardNum']; ?>', '<?php echo $row['RecordedBy']; ?>', '<?php echo $row['Comments']; ?>')">Edit</button>
+
                     </td>
                     <?php
                     echo "</tr>";
@@ -377,6 +395,70 @@ function sortTable(columnIndex) {
     }
 }
 
+function openEditPopup(rowId, fullName, s0Number, isReplacement, building, roomNumber, isCheckOut, keyCardNum, recordedBy, comments) {
+    alert("Function called with rowId: " + rowId);
+
+        document.getElementById('FullNameInput').value = fullName;
+        document.getElementById('S0NumberInput').value = s0Number;
+        document.getElementById('IsReplacementInput').value = isReplacement;
+        document.getElementById('BuildingInput').value = building;
+        document.getElementById('RoomNumberInput').value = roomNumber;
+        document.getElementById('IsCheckOutInput').value = isCheckOut;
+        document.getElementById('KeyCardNumInput').value = keyCardNum;
+        document.getElementById('RecordedByInput').value = recordedBy;
+        document.getElementById('CommentsInput').value = comments;
+
+    document.getElementById('HealthAlert').style.display = 'block';
+}
+
+
+function submitEdit() {
+    // Retrieve input field values
+    var fullName = document.getElementById('FullNameInput').value;
+    var s0Number = document.getElementById('S0NumberInput').value;
+    var isReplacement = document.getElementById('IsReplacementInput').value;
+    var building = document.getElementById('BuildingInput').value;
+    var roomNumber = document.getElementById('RoomNumberInput').value;
+    var isCheckOut = document.getElementById('IsCheckOutInput').value;
+    var keyCardNum = document.getElementById('KeyCardNumInput').value;
+    var recordedBy = document.getElementById('RecordedByInput').value;
+    var comments = document.getElementById('CommentsInput').value;
+
+    // Construct data object to send to server
+    var data = {
+        fullName: fullName,
+        s0Number: s0Number,
+        isReplacement: isReplacement,
+        building: building,
+        roomNumber: roomNumber,
+        isCheckOut: isCheckOut,
+        keyCardNum: keyCardNum,
+        recordedBy: recordedBy,
+        comments: comments
+    };
+
+    // Send data to server using AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'AJAX/EditLockoutRecord.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                // Request successful, handle response
+                var response = JSON.parse(xhr.responseText);
+                // Handle response, e.g., display success message
+                alert(response.message);
+                // Close the popup window
+                closePopup();
+            } else {
+                // Error handling
+                alert('Error: ' + xhr.statusText);
+            }
+        }
+    };
+    xhr.send(JSON.stringify(data));
+}
+
 function compareDates(dateStr1, dateStr2) {
     // Try parsing date strings in different formats
     var date1 = new Date(dateStr1);
@@ -393,6 +475,7 @@ function compareDates(dateStr1, dateStr2) {
 }
 
 var checkboxes = document.querySelectorAll('.completed-checkbox');
+
 checkboxes.forEach(function(checkbox) {
     checkbox.addEventListener('change', function() {
         var rowId = this.getAttribute('data-rowid');
@@ -403,25 +486,29 @@ checkboxes.forEach(function(checkbox) {
 
         // Send an AJAX request to update the database
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update_completed.php', true);
+        xhr.open('POST', 'AJAX/UpdateLockout.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    // Request successful, handle response if needed
+                    // Request successful, alert the response
+                    // alert(xhr.responseText);
                 } else {
                     // Error handling
+                    alert("Error: " + xhr.statusText);
                 }
             }
         };
         xhr.send('rowId=' + rowId);
     });
 });
+
+
+
 </script>
 
 <div class="black-row"></div>
 
-<button class="back-button" onclick="history.back()">Back</button>
 
 </body>
 </html>
