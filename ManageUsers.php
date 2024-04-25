@@ -247,7 +247,7 @@ th:nth-child(1) {
                 <td class="action-buttons">
                     <button class="action-button" onclick="editUser('John Doe')">Edit</button>
                     <button class="action-button" onclick="deleteUser('John Doe')">Delete</button>
-                    <button class="action-button" onclick="changePassword('John Doe')">Change Password</button>
+                    
                 </td>
             </tr>
             <tr>
@@ -256,7 +256,7 @@ th:nth-child(1) {
                 <td class="action-buttons">
                     <button class="action-button" onClick="document.getElementById('HealthAlert').style.display='initial'">Edit</button>
                     <button class="action-button" onclick="deleteUser('Jane Smith')">Delete</button>
-                    <button class="action-button" onclick="changePassword('Jane Smith')">Change Password</button>
+                  
                 </td>
             </tr>
             <!-- Add more users as needed -->
@@ -270,9 +270,16 @@ th:nth-child(1) {
         }
 
         function deleteUser(username) {
-            // Implement delete user functionality here
-            console.log('Deleting user:', username);
-        }
+    // Ask for confirmation before deleting
+    var confirmation = confirm("Are you sure you want to delete user " + username + "?");
+    if (confirmation) {
+        // If user confirms, proceed with deletion
+        console.log('Deleting user:', username);
+    } else {
+        // If user cancels, do nothing
+        console.log('Deletion canceled by user.');
+    }
+}
 
         function changePassword(username) {
             // Implement change password functionality here
@@ -284,28 +291,32 @@ th:nth-child(1) {
 
 <div class="black-row"></div>
 
-<button class="back-button" onclick="history.back()">Back</button>
-
-<div id="HealthAlert" class="PopWindow" style="display:none;z-index:11;background-color:#FFFFFF;height:70%;width:50%;left:25%;top:15%;position:fixed;">
+<div id="HealthAlert" class="PopWindow" style="display:none;z-index:11;background-color:#FFFFFF;height:auto;width:50%;left:25%;top:15%;position:fixed;">
     <div class="popup">
         <div class="close" onClick="document.getElementById('HealthAlert').style.display='none'">x</div>
         <div class="content">
             <h2 id="HealthAlertTitle">Edit<br/></h2>
         </div>
         <div class="content" id="HealthAlertWords" style="font-size:23px;color:black">
-            Edit username, role, main building, new password, and confirm password here
+            Edit username, role, and main building here
         </div>
         <div style="margin-top: 20px;">
             <label for="username">Username:</label>
-            <input type="text" id="username" name="username" style="margin-left: 10px;">
+            <input type="text" id="username" name="username" style="margin-left: 10px;" autocomplete="off">
+        </div>
+        <div id="passwordFields" style="display:none;">
+            <input type="hidden" id="dummy_password" autocomplete="off"> <!-- Hidden input field -->
+            <div style="margin-top: 20px;">
+                <label for="password">New Password:</label>
+                <input type="password" id="password" style="margin-left: 10px;" autocomplete="new-password">
+            </div>
+            <div style="margin-top: 20px;">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" style="margin-left: 10px;" autocomplete="new-password">
+            </div>
         </div>
         <div style="margin-top: 20px;">
-            <label for="password">New Password:</label>
-            <input type="password" id="password" name="password" style="margin-left: 10px;">
-        </div>
-        <div style="margin-top: 20px;">
-            <label for="confirm_password">Confirm Password:</label>
-            <input type="password" id="confirm_password" name="confirm_password" style="margin-left: 10px;">
+            <button onclick="togglePasswordFields()">Change Password</button>
         </div>
         <div style="margin-top: 20px;">
             <label for="role">Role:</label>
@@ -331,11 +342,66 @@ th:nth-child(1) {
             </select>
         </div>
         <div style="margin-top: 20px;">
-            <button onclick="saveUserInfo()">Save</button>
+            <button onclick="saveUserInfo(event)">Save</button>
         </div>
-        <img id="HealthQuestion" onClick="document.getElementById('QuestionInfo').style.display='initial'" style='display:none;' src="Images/RR_Art/WebsitePages/Icons/QuestionMark.png" width="50px"/>
     </div>
 </div>
+
+<script>
+    var passwordFieldsVisible = false; // Track if password fields are visible
+    
+    function togglePasswordFields() {
+        var passwordFields = document.getElementById("passwordFields");
+        if (passwordFields.style.display === "none") {
+            passwordFields.style.display = "block";
+            document.getElementById("password").setAttribute("name", "password");
+            document.getElementById("confirm_password").setAttribute("name", "confirm_password");
+            passwordFieldsVisible = true; // Set the flag to true when password fields are visible
+        } else {
+            passwordFields.style.display = "none";
+            document.getElementById("password").removeAttribute("name");
+            document.getElementById("confirm_password").removeAttribute("name");
+            passwordFieldsVisible = false; // Set the flag to false when password fields are not visible
+        }
+    }
+    
+    function saveUserInfo(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        
+        var username = document.getElementById("username").value;
+        var role = document.getElementById("role").value;
+        var building = document.getElementById("building").value;
+        
+        var password = "";
+        var confirm_password = "";
+        
+        // Check if password fields are visible and only then validate passwords
+        if (passwordFieldsVisible) {
+            password = document.getElementById("password").value;
+            confirm_password = document.getElementById("confirm_password").value;
+        }
+        
+        // Check if password and confirm password are not empty and match
+        if ((password !== "" && confirm_password !== "") && (password === confirm_password)) {
+            // Perform your save action here, including sending data to the server
+            console.log("Username:", username);
+            console.log("Role:", role);
+            console.log("Building:", building);
+            console.log("Password:", password);
+            
+            // Reset password fields
+            document.getElementById("password").value = "";
+            document.getElementById("confirm_password").value = "";
+        } else {
+            alert("Password fields must not be empty and must match!");
+        }
+    }
+</script>
+
+
+<button class="back-button" onclick="history.back()">Back</button>
+
+
 
 
 
