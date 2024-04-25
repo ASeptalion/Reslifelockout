@@ -207,7 +207,20 @@ input[type="password"] {
       <br><br>
 
       <label for="building">Building:</label>
-      <input type="text" id="building" name="building" required>
+<select id="building" name="building" required>
+    <option value="Towers East">Towers East</option>
+    <option value="Towers West">Towers West</option>
+    <option value="Towers North">Towers North</option>
+    <option value="Towers South">Towers South</option>
+    <option value="Group">Group</option>
+    <option value="Laferla">Laferla</option>
+    <option value="River">River</option>
+    <option value="Merick">Merick</option>
+    <option value="Vandiver">Vandiver</option>
+</select>
+
+<br><br><br>
+
 
       <label for="room-number">Room Number:</label>
       <input type="text" id="room-number" name="room-number" required>
