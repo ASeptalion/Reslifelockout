@@ -164,6 +164,8 @@ th:nth-child(1) {
     border: none;
     float: right;
 }
+
+
 </style>
 </head>
 <body>
