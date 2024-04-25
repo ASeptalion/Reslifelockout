@@ -165,7 +165,22 @@ th:nth-child(1) {
     float: right;
 }
 
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #8a1f28;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
+.back-button:hover {
+    background-color: #75191f;
+}
 </style>
 </head>
 <body>
@@ -244,6 +259,7 @@ th:nth-child(1) {
 
 <div class="black-row"></div>
 
+<button class="back-button" onclick="history.back()">Back</button>
 
 </body>
 </html>
