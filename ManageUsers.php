@@ -231,41 +231,54 @@ th:nth-child(1) {
 <div class="login-container">
 
 
-    <table>
-        <thead>
-            <tr>
-                <th>User</th> <!-- Adjust width for more room -->
-                <th>Role</th> <!-- Adjust width for more room -->
-                <th>Action</th> <!-- Adjust width for more room -->
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Replace the following static data with dynamic data from the database -->
-            <tr>
-                <td>John Doe</td>
-                <td>Admin</td>
+<?php
+// Assuming you have a database connection established
+
+// Fetch data from the users table
+$query = "SELECT * FROM users";
+$result = mysqli_query($con, $query);
+
+// Check if query was successful
+if ($result) {
+    // Output the table structure
+    echo '<table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+    // Loop through the rows of the result set
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo '<tr>
+                <td>' . $row['username'] . '</td>
+                <td>' . $row['Position'] . '</td>
                 <td class="action-buttons">
-                    <button class="action-button" onclick="editUser('John Doe')">Edit</button>
-                    <button class="action-button" onclick="deleteUser('John Doe')">Delete</button>
-
+                    <button class="action-button" onclick="editUser(\'' . $row['username'] . '\')">Edit</button>
+                    <button class="action-button" onclick="deleteUser(\'' . $row['username'] . '\')">Delete</button>
                 </td>
-            </tr>
-            <tr>
-                <td>Jane Smith</td>
-                <td>User</td>
-                <td class="action-buttons">
-                    <button class="action-button" onClick="document.getElementById('HealthAlert').style.display='initial'">Edit</button>
-                    <button class="action-button" onclick="deleteUser('Jane Smith')">Delete</button>
+              </tr>';
+    }
 
-                </td>
-            </tr>
-            <!-- Add more users as needed -->
-        </tbody>
-    </table>
+    // Close table structure
+    echo '</tbody>
+        </table>';
+} else {
+    // Error handling if the query fails
+    echo "Error: " . mysqli_error($con);
+}
 
-    <script>
+?>
+
+
+    <script>    
         function editUser(username) {
-            // Implement edit user functionality here
+            
+            document.getElementById('HealthAlert').style.display = 'block';
+            document.getElementById('HealthAlertTitle').innerText = 'Edit ' + username;
             console.log('Editing user:', username);
         }
 
@@ -363,6 +376,31 @@ th:nth-child(1) {
             document.getElementById("confirm_password").removeAttribute("name");
             passwordFieldsVisible = false; // Set the flag to false when password fields are not visible
         }
+    }
+
+
+    function saveUserInfo(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Serialize form data
+        var formData = $('#HealthAlert .popup .content').find('input, select').serialize();
+
+        // Send AJAX request
+        $.ajax({
+            type: 'POST',
+            url: 'submit_data.php', // Replace with your server-side script URL
+            data: formData,
+            success: function(response) {
+                // Handle successful response
+                console.log(response); // Log the response
+                // You can do further processing here, like showing a success message
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error(xhr.responseText); // Log the error message
+                // You can display an error message to the user
+            }
+        });
     }
 
     function saveUserInfo(event) {
