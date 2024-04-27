@@ -32,6 +32,19 @@ if (!function_exists('UserInfo'))
     }
 }
 
+if (!function_exists('UserInfoByID'))
+{
+    function UserInfoByID($con, $UserID) {
+			$sql_UserInfoByID = "SELECT * FROM Users WHERE id = ?";
+			$stmt_UserInfoByID = $con->prepare($sql_UserInfoByID);
+			$stmt_UserInfoByID->bind_param("s", $UserID);
+			$stmt_UserInfoByID->execute();
+			$result_UserInfoByID = $stmt_UserInfoByID->get_result();
+
+			return $result_UserInfoByID;
+    }
+}
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
