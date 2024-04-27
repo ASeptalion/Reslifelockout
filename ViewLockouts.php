@@ -263,6 +263,7 @@ table tr:nth-child(even) {
             <input type="text" id="IsCheckOutInput" placeholder="Is Check Out">
             <input type="text" id="KeyCardNumInput" placeholder="Key Card Number">
             <input type="text" id="RecordedByInput" placeholder="Recorded By">
+            <input type="hidden" id="HiddenRowID" placeholder="">
             <textarea id="CommentsInput" style="width: 100%; height: 100px;" placeholder="Additional Comments"></textarea>
             <button onclick="submitEdit()">Submit Edit</button>
         </div>
@@ -413,7 +414,7 @@ function sortTable(columnIndex) {
 }
 
 function openEditPopup(rowId, fullName, s0Number, isReplacement, building, roomNumber, isCheckOut, keyCardNum, recordedBy, comments) {
-    alert("Function called with rowId: " + rowId);
+    // alert("Function called with rowId: " + rowId);
 
         document.getElementById('FullNameInput').value = fullName;
         document.getElementById('S0NumberInput').value = s0Number;
@@ -424,6 +425,7 @@ function openEditPopup(rowId, fullName, s0Number, isReplacement, building, roomN
         document.getElementById('KeyCardNumInput').value = keyCardNum;
         document.getElementById('RecordedByInput').value = recordedBy;
         document.getElementById('CommentsInput').value = comments;
+        document.getElementById('HiddenRowID').value = rowId;
 
     document.getElementById('HealthAlert').style.display = 'block';
 }
@@ -440,9 +442,11 @@ function submitEdit() {
     var keyCardNum = document.getElementById('KeyCardNumInput').value;
     var recordedBy = document.getElementById('RecordedByInput').value;
     var comments = document.getElementById('CommentsInput').value;
+    var RowID = document.getElementById('HiddenRowID').value;
 
     // Construct data object to send to server
     var data = {
+        row_id: RowID,
         fullName: fullName,
         s0Number: s0Number,
         isReplacement: isReplacement,
@@ -454,22 +458,20 @@ function submitEdit() {
         comments: comments
     };
 
-    // Send data to server using AJAX
+
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'AJAX/EditLockoutRecord.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                // Request successful, handle response
-                var response = JSON.parse(xhr.responseText);
-                // Handle response, e.g., display success message
-                alert(response.message);
-                // Close the popup window
-                closePopup();
+                // alert(xhr.responseText);
+                if(xhr.responseText == "success"){
+                  window.location.reload();
+                }
             } else {
                 // Error handling
-                alert('Error: ' + xhr.statusText);
+                alert("Error: " + xhr.statusText);
             }
         }
     };
