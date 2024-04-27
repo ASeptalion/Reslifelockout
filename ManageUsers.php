@@ -257,11 +257,12 @@ if ($result) {
                 <td>' . $row['username'] . '</td>
                 <td>' . $row['Position'] . '</td>
                 <td class="action-buttons">
-                    <button class="action-button" onclick="editUser(\'' . $row['username'] . '\')">Edit</button>
+                    <button class="action-button" onclick="editUser(\'' . $row['username'] . '\', \'' . $row['id'] . '\')">Edit</button>
                     <button class="action-button" onclick="deleteUser(\'' . $row['username'] . '\')">Delete</button>
                 </td>
               </tr>';
     }
+    
 
     // Close table structure
     echo '</tbody>
@@ -275,11 +276,12 @@ if ($result) {
 
 
     <script>    
-        function editUser(username) {
+        function editUser(username, UserID) {
             
             document.getElementById('HealthAlert').style.display = 'block';
             document.getElementById('HealthAlertTitle').innerText = 'Edit ' + username;
-            console.log('Editing user:', username);
+
+            document.getElementById('row_id').value = UserID;
         }
 
         function deleteUser(username) {
@@ -354,6 +356,7 @@ if ($result) {
                 <option value="Greek">Greek</option>
             </select>
         </div>
+        <input type="hidden" id="row_id" name="row_id" value="123">
         <div style="margin-top: 20px;">
             <button onclick="saveUserInfo(event)">Save</button>
         </div>
@@ -378,62 +381,38 @@ if ($result) {
         }
     }
 
-
     function saveUserInfo(event) {
-        event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); // Prevent the default form submission behavior
 
-        // Serialize form data
-        var formData = $('#HealthAlert .popup .content').find('input, select').serialize();
+    // Serialize form data
+    var formData = $('#HealthAlert .popup .content').find('input, select').serialize();
 
-        // Send AJAX request
-        $.ajax({
-            type: 'POST',
-            url: 'submit_data.php', // Replace with your server-side script URL
-            data: formData,
-            success: function(response) {
-                // Handle successful response
-                console.log(response); // Log the response
-                // You can do further processing here, like showing a success message
-            },
-            error: function(xhr, status, error) {
-                // Handle error
-                console.error(xhr.responseText); // Log the error message
-                // You can display an error message to the user
+    document.getElementById('row_id').value = rowId;
+    // Append the row ID to the formData
+    formData += '&row_id=' + encodeURIComponent(rowId);
+
+    // Send AJAX request
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'AJAX/EditUserAccount.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                alert(xhr.responseText);
+                // if(xhr.responseText == "success"){
+                //   window.location.reload();
+                // }
+            } else {
+                // Error handling
+                alert("Error: " + xhr.statusText);
             }
-        });
-    }
-
-    function saveUserInfo(event) {
-        event.preventDefault(); // Prevent the default form submission behavior
-
-        var username = document.getElementById("username").value;
-        var role = document.getElementById("role").value;
-        var building = document.getElementById("building").value;
-
-        var password = "";
-        var confirm_password = "";
-
-        // Check if password fields are visible and only then validate passwords
-        if (passwordFieldsVisible) {
-            password = document.getElementById("password").value;
-            confirm_password = document.getElementById("confirm_password").value;
         }
+    };
+    xhr.send(formData);
 
-        // Check if password and confirm password are not empty and match
-        if ((password !== "" && confirm_password !== "") && (password === confirm_password)) {
-            // Perform your save action here, including sending data to the server
-            console.log("Username:", username);
-            console.log("Role:", role);
-            console.log("Building:", building);
-            console.log("Password:", password);
+    alert("Harley Bear");
+}
 
-            // Reset password fields
-            document.getElementById("password").value = "";
-            document.getElementById("confirm_password").value = "";
-        } else {
-            alert("Password fields must not be empty and must match!");
-        }
-    }
 </script>
 
 
