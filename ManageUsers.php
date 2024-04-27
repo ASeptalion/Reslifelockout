@@ -206,6 +206,11 @@ th:nth-child(1) {
     margin-top:-40px;
     cursor:pointer;
 }
+#NewUserButton{
+  position: absolute;
+  top:30%;
+  left:63%;
+}
 </style>
 </head>
 <body>
@@ -214,99 +219,7 @@ th:nth-child(1) {
       <button onclick="location.href='AJAX/Logout.php'" id="logoutBtn" class="function-button logout-button">Logout</button>
   </div>
 
-
-<div class="image-row">
-    <img src="Images/primaryLogo.png" width="300px" alt="Your Image" class="image">
-</div>
-
-<div class="red-block-2">
-    <h2 style="color: white;">Welcome <?php echo $User?></h2>
-</div>
-
-<div class="red-block-e">
-    <h1 style="color: white;">Manage Users</h1>
-</div>
-
-
-<div class="login-container">
-
-
-<?php
-// Assuming you have a database connection established
-
-// Fetch data from the users table
-$query = "SELECT * FROM users";
-$result = mysqli_query($con, $query);
-
-// Check if query was successful
-if ($result) {
-    // Output the table structure
-    echo '<table>
-            <thead>
-                <tr>
-                    <th>User</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>';
-
-    // Loop through the rows of the result set
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo '<tr>
-                <td>' . $row['username'] . '</td>
-                <td>' . $row['Position'] . '</td>
-                <td class="action-buttons">
-                    <button class="action-button" onclick="editUser(\'' . $row['username'] . '\', \'' . $row['id'] . '\')">Edit</button>
-                    <button class="action-button" onclick="deleteUser(\'' . $row['username'] . '\')">Delete</button>
-                </td>
-              </tr>';
-    }
-    
-
-    // Close table structure
-    echo '</tbody>
-        </table>';
-} else {
-    // Error handling if the query fails
-    echo "Error: " . mysqli_error($con);
-}
-
-?>
-
-
-    <script>    
-        function editUser(username, UserID) {
-            
-            document.getElementById('HealthAlert').style.display = 'block';
-            document.getElementById('HealthAlertTitle').innerText = 'Edit ' + username;
-
-            document.getElementById('row_id').value = UserID;
-        }
-
-        function deleteUser(username) {
-    // Ask for confirmation before deleting
-    var confirmation = confirm("Are you sure you want to delete user " + username + "?");
-    if (confirmation) {
-        // If user confirms, proceed with deletion
-        console.log('Deleting user:', username);
-    } else {
-        // If user cancels, do nothing
-        console.log('Deletion canceled by user.');
-    }
-}
-
-        function changePassword(username) {
-            // Implement change password functionality here
-            console.log('Changing password for user:', username);
-        }
-    </script>
-</div>
-
-
-<div class="black-row"></div>
-
-<div id="HealthAlert" class="PopWindow" style="display:none;z-index:11;background-color:#FFFFFF;height:auto;width:50%;left:25%;top:15%;position:fixed;">
+  <div id="HealthAlert" class="PopWindow" style="display:none;z-index:11;background-color:#FFFFFF;height:auto;width:50%;left:25%;top:15%;position:fixed;">
     <div class="popup">
         <div class="close" onClick="document.getElementById('HealthAlert').style.display='none'">x</div>
         <div class="content">
@@ -330,43 +243,96 @@ if ($result) {
                 <input type="password" id="confirm_password" style="margin-left: 10px;" autocomplete="new-password">
             </div>
         </div>
-        <div style="margin-top: 20px;">
+        <div style="margin-top: 20px;" id="PasswordButton">
             <button onclick="togglePasswordFields()">Change Password</button>
         </div>
-        <div style="margin-top: 20px;">
-            <label for="role">Role:</label>
-            <select id="role" name="role" style="margin-left: 10px;">
-                <option value="Admin">Admin</option>
-                <option value="HD">HD</option>
-                <option value="RA">RA</option>
-            </select>
-        </div>
-        <div style="margin-top: 20px;">
-            <label for="building">Main Building:</label>
-            <select id="building" name="building" style="margin-left: 10px;">
-                <option value="Towers & Greek">Towers & Greek</option>
-                <option value="Laferla">Laferla</option>
-                <option value="Merick">Merick</option>
-                <option value="Vandiver">Vandiver</option>
-                <option value="River">River</option>
-                <option value="Towers East">Towers East</option>
-                <option value="Towers North">Towers North</option>
-                <option value="Towers South">Towers South</option>
-                <option value="Towers West">Towers West</option>
-                <option value="Greek">Greek</option>
-            </select>
-        </div>
+        <br><br>
+        Position: <select id="role" name="role" style="margin-left: 10px;" required>
+            <option value="" disabled selected>Please select a role</option>
+            <option value="Admin">Admin</option>
+            <option value="Hall Director">Hall Director</option>
+            <option value="Desk Worker">Desk Worker</option>
+        </select>
+        <br>
+        Building: <select id="building" name="building" style="margin-left: 10px;" required>
+            <option value="" disabled selected>Please select a building</option>
+            <option value="Towers & Greek">Towers & Greek</option>
+            <option value="Laferla">Laferla</option>
+            <option value="Merick">Merick</option>
+            <option value="Vandiver">Vandiver</option>
+            <option value="River">River</option>
+            <option value="Towers East">Towers East</option>
+            <option value="Towers North">Towers North</option>
+            <option value="Towers South">Towers South</option>
+            <option value="Towers West">Towers West</option>
+            <option value="Greek">Greek</option>
+        </select>
+        <br>
         <input type="hidden" id="row_id" name="row_id" value="123">
         <div style="margin-top: 20px;">
-            <button onclick="saveUserInfo(event)">Save</button>
+            <button id="saveButton">Save</button>
         </div>
     </div>
 </div>
 
+
+
+
+<div class="image-row">
+    <img src="Images/primaryLogo.png" width="300px" alt="Your Image" class="image">
+</div>
+
+<div class="red-block-2">
+    <h2 style="color: white;">Welcome <?php echo $User?></h2>
+</div>
+
+<div class="red-block-e">
+    <h1 style="color: white;">Manage Users</h1>
+</div>
+
+
+<div class="login-container">
+
+<div id="NewUserButton" class="action-button" onclick="NewUser();" >New User</div>
+
+<?php
+$query = "SELECT * FROM users";
+$result = mysqli_query($con, $query);
+
+if ($result) {
+    echo '<table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Main Building</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>';
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo '<tr>
+                <td>' . $row['username'] . '</td>
+                <td>' . $row['Position'] . '</td>
+                <td>' . $row['MainBuilding'] . '</td>
+                <td class="action-buttons">
+                    <button class="action-button" onclick="editUser(\'' . $row['username'] . '\', \'' . $row['id'] . '\', \'' . $row['MainBuilding'] . '\', \'' . $row['Position'] . '\')">Edit</button>
+                    <button class="action-button" onclick="deleteUser(\'' . $row['username'] . '\', \'' . $row['id'] . '\')">Delete</button>
+                </td>
+              </tr>';
+    }
+    echo '</tbody>
+        </table>';
+}
+?>
+</div>
+<div class="black-row"></div>
+
 <script>
     var passwordFieldsVisible = false; // Track if password fields are visible
 
-    function togglePasswordFields() {
+    function togglePasswordFields()
+    {
         var passwordFields = document.getElementById("passwordFields");
         if (passwordFields.style.display === "none") {
             passwordFields.style.display = "block";
@@ -381,49 +347,185 @@ if ($result) {
         }
     }
 
-    function saveUserInfo(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
+    function saveUserInfo(event)
+    {
+      var role = $('#role').val();
+      var building = $('#building').val();
+      var username = $('#username').val();
 
-    // Serialize form data
-    var formData = $('#HealthAlert .popup .content').find('input, select').serialize();
+      var password = $('#password').val();
+      var confirm_password = $('#confirm_password').val();
 
-    document.getElementById('row_id').value = rowId;
-    // Append the row ID to the formData
-    formData += '&row_id=' + encodeURIComponent(rowId);
+      // Check if role and building are either null or empty
+      if (!role || !building) {
+          alert("Please select a role and a building.");
+          return; // Prevent further execution of the function
+      }
 
-    // Send AJAX request
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'AJAX/EditUserAccount.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                alert(xhr.responseText);
-                // if(xhr.responseText == "success"){
-                //   window.location.reload();
-                // }
-            } else {
-                // Error handling
-                alert("Error: " + xhr.statusText);
-            }
+      // Check if password fields are visible and password is entered
+      if ($('#passwordFields').is(':visible') && password) {
+          if (password !== confirm_password) {
+              alert("The passwords you entered do not match!");
+              return; // Prevent further execution of the function
+          }
+          else if (password.length < 6 || !/[A-Z]/.test(password)) {
+              alert("Password must be at least 6 characters long and contain at least 1 capital letter.");
+              return; // Prevent further execution of the function
+          }
+      }
+
+      if (!username.includes('@semo.edu')) {
+          alert("The username for the account should be the SEMO email on file for this person");
+          return; // Prevent further execution of the function
+      }
+
+      // Collect form data
+      var formData = {
+          username: $('#username').val(),
+          role: role,
+          building: building,
+          row_id: $('#row_id').val(),
+          password: $('#password').val()
+      };
+
+      // If the password fields are visible and password is entered, add them to the formData
+      if ($('#passwordFields').is(':visible') && password) {
+          formData.password = password;
+          formData.confirm_password = confirm_password;
+      }
+
+      // Send AJAX request
+      $.ajax({
+          type: 'POST',
+          url: 'AJAX/EditUserAccount.php',
+          data: formData,
+          success: function(response) {
+              alert(response);
+              window.location.reload();
+          },
+          error: function(xhr, status, error) {
+              alert("Error: " + error); // Alert any errors that occur during the AJAX request
+          }
+      });
+    }
+
+    function CreateNewUser(event)
+    {
+      var role = $('#role').val();
+      var building = $('#building').val();
+      var username = $('#username').val();
+
+      var password = $('#password').val();
+      var confirm_password = $('#confirm_password').val();
+
+      // Check if role and building are either null or empty
+      if (!role || !building) {
+          alert("Please select a role and a building.");
+          return; // Prevent further execution of the function
+      }
+
+      // Check if password fields are visible and password is entered
+      if ($('#passwordFields').is(':visible') && password) {
+          if (password !== confirm_password) {
+              alert("The passwords you entered do not match!");
+              return; // Prevent further execution of the function
+          }
+          else if (password.length < 6 || !/[A-Z]/.test(password)) {
+              alert("Password must be at least 6 characters long and contain at least 1 capital letter.");
+              return; // Prevent further execution of the function
+          }
+      }
+
+      if (!username.includes('@semo.edu')) {
+          alert("The username for the account should be the SEMO email on file for this person");
+          return; // Prevent further execution of the function
+      }
+
+      // Collect form data
+      var formData = {
+          username: $('#username').val(),
+          role: role,
+          building: building,
+          row_id: $('#row_id').val(),
+          password: $('#password').val()
+      };
+
+      // If the password fields are visible and password is entered, add them to the formData
+      if ($('#passwordFields').is(':visible') && password) {
+          formData.password = password;
+          formData.confirm_password = confirm_password;
+      }
+
+      // Send AJAX request
+      $.ajax({
+          type: 'POST',
+          url: 'AJAX/CreateNewUser.php',
+          data: formData,
+          success: function(response) {
+            // alert(response); // Alert the response from the server
+               if(response == "Done"){
+                 window.location.reload();
+               }
+          },
+          error: function(xhr, status, error) {
+              alert("Error: " + error); // Alert any errors that occur during the AJAX request
+          }
+      });
+    }
+
+
+    function editUser(username, UserID, Building, Role)
+    {
+        document.getElementById('HealthAlert').style.display = 'block';
+        document.getElementById('HealthAlertTitle').innerText = 'Edit ' + username;
+
+        var saveButton = document.getElementById('saveButton');
+        saveButton.onclick = function(event) {
+            saveUserInfo(event);
+        };
+
+        document.getElementById('username').value = username;
+        document.getElementById('building').value = Building;
+        document.getElementById('role').value = Role;
+        document.getElementById('row_id').value = UserID;
+    }
+
+    function NewUser()
+    {
+        var saveButton = document.getElementById('saveButton');
+        saveButton.onclick = function(event) {
+            CreateNewUser(event);
+        };
+
+        document.getElementById('HealthAlert').style.display = 'block';
+        document.getElementById('PasswordButton').style.display = 'none';
+        document.getElementById('passwordFields').style.display = 'block';
+    }
+
+    function deleteUser(username, UserID)
+    {
+        // Ask for confirmation before deleting
+        var confirmation = confirm("Are you sure you want to delete user " + username + "?");
+        if (confirmation) {
+          $.ajax({
+              type: 'POST',
+              url: 'AJAX/DeleteUser.php',
+              data: { UserID: UserID },
+              success: function(response) {
+                  if(response == "Complete"){
+                    window.location.reload();
+                  }
+              },
+              error: function(xhr, status, error) {
+                  alert("Error: " + error); // Alert any errors that occur during the AJAX request
+              }
+          });
         }
-    };
-    xhr.send(formData);
+    }
 
-    alert("Harley Bear");
-}
 
 </script>
-
-
 <button class="back-button" onclick="history.back()">Back</button>
-
-
-
-
-
-
 </div>
-
 </body>
 </html>

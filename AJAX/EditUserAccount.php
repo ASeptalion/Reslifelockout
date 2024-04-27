@@ -3,19 +3,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Include database connection details
 require_once('../Connections/db_details.php');
-
-// Connect to the database
 $con = mysqli_connect($db_host, $db_user, $db_pass, $db_table);
-
-// Check for connection errors
-if (mysqli_connect_errno()) {
-    header("Location: /RR_Error201.php");
-    exit();
-}
-
-// Start session
 session_start();
 
 // Check if user is logged in
@@ -25,16 +14,26 @@ if (isset($_SESSION['username'])) {
 
     // Check if the request method is POST
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Extract data from POST request
-        // Extract data from POST request
-        $username = $_POST['username'];
+
+        $NewUsername = $_POST['username'];
         $role = $_POST['role'];
         $building = $_POST['building'];
-        $userID = $_POST['row_id']; // Retrieve the user ID from POST data
+        $userID = $_POST['row_id'];
+        $NewPassword = $_POST['password'];
 
-        // Construct SQL query to update user account based on user ID
-        $sql = "UPDATE Users SET Position = '$role', Building = '$building' WHERE id = '$userID'";
+        $result_UserInfoByID = UserInfoByID($con, $userID);
+        $row_UserInfoByID = mysqli_fetch_assoc($result_UserInfoByID);
 
+        $CurrentUsername = $row_UserInfoByID['username'];
+        $Additions = "";
+
+        if ($CurrentUsername != $NewUsername && $NewUsername != "") {
+            $Additions = $Additions . " , username = '" . $NewUsername . "'";
+        } elseif ($NewPassword != "") {
+            $Additions = $Additions . " , password = '" . $NewPassword . "'";
+        }
+
+        $sql = "UPDATE Users SET Position = '$role', MainBuilding = '$building' $Additions WHERE id = '$userID'";
 
         // Execute the SQL query
         if (mysqli_query($con, $sql)) {
@@ -52,4 +51,3 @@ if (isset($_SESSION['username'])) {
     // Redirect if user is not logged in
     header('Location: index.php?reason="login"');
 }
-
