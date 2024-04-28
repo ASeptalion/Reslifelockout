@@ -228,6 +228,20 @@ table tr:nth-child(even) {
 .back-button:hover {
     background-color: #75191f;
 }
+.action-button {
+    width: auto;
+    min-width: 120px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+}
 </style>
 </head>
 <body>
@@ -250,6 +264,7 @@ table tr:nth-child(even) {
 
 
 <div class="login-container">
+
   <div id="HealthAlert" class="PopWindow" style="display:none; z-index:11; background-color:#FFFFFF; height:70%; width:50%; left:25%; top:15%; position:fixed;">
     <div class="popup">
         <div class="close" onClick="document.getElementById('HealthAlert').style.display='none'">x</div>
@@ -353,12 +368,20 @@ table tr:nth-child(even) {
             ?>
         </tbody>
     </table>
+    <tr>
+        <td colspan="11">
+            <button id="submitSelectedRows" class="action-button" style="position:absolute;left:90%;margin-top:1%;" onclick="submitSelectedRows()">Submit Selected Rows</button>
+        </td>
+    </tr>
+    <input type="checkbox" id="selectAllCheckbox" onclick="selectAllRows(this)" style="position:absolute;left:88.5%;margin-top:4.2%;">
+    <label for="selectAllCheckbox" style="position:absolute;left:90%;margin-top:4%;">Select/Deselect All</label>
 </div>
 <button class="back-button" onclick="history.back()">Back</button>
 </div>
 
 <script>
-function sortTable(columnIndex) {
+function sortTable(columnIndex)
+{
     var table, rows, switching, i, x, y, shouldSwitch, icon;
     table = document.getElementById("lockoutTable");
     switching = true;
@@ -413,7 +436,8 @@ function sortTable(columnIndex) {
     }
 }
 
-function openEditPopup(rowId, fullName, s0Number, isReplacement, building, roomNumber, isCheckOut, keyCardNum, recordedBy, comments) {
+function openEditPopup(rowId, fullName, s0Number, isReplacement, building, roomNumber, isCheckOut, keyCardNum, recordedBy, comments)
+{
     // alert("Function called with rowId: " + rowId);
 
         document.getElementById('FullNameInput').value = fullName;
@@ -431,7 +455,8 @@ function openEditPopup(rowId, fullName, s0Number, isReplacement, building, roomN
 }
 
 
-function submitEdit() {
+function submitEdit()
+{
     // Retrieve input field values
     var fullName = document.getElementById('FullNameInput').value;
     var s0Number = document.getElementById('S0NumberInput').value;
@@ -478,7 +503,8 @@ function submitEdit() {
     xhr.send(JSON.stringify(data));
 }
 
-function compareDates(dateStr1, dateStr2) {
+function compareDates(dateStr1, dateStr2)
+{
     // Try parsing date strings in different formats
     var date1 = new Date(dateStr1);
     if (isNaN(date1.getTime())) {
@@ -493,34 +519,64 @@ function compareDates(dateStr1, dateStr2) {
     return date1.getTime() - date2.getTime();
 }
 
-var checkboxes = document.querySelectorAll('.completed-checkbox');
+   var selectedRows = [];
 
-checkboxes.forEach(function(checkbox) {
-    checkbox.addEventListener('change', function() {
-        var rowId = this.getAttribute('data-rowid');
-        var tableRow = this.closest('tr');
+   // Function to toggle row selection
+   function toggleRowSelection(checkbox) {
+       var rowId = checkbox.getAttribute('data-rowid');
+       if (checkbox.checked) {
+           // Add row ID to selectedRows array if checked
+           selectedRows.push(rowId);
+       } else {
+           // Remove row ID from selectedRows array if unchecked
+           var index = selectedRows.indexOf(rowId);
+           if (index !== -1) {
+               selectedRows.splice(index, 1);
+           }
+       }
+   }
 
-        // Remove the row from the table
-        tableRow.parentNode.removeChild(tableRow);
+   // Function to select/deselect all rows
+   function selectAllRows(checkbox) {
+       var checkboxes = document.querySelectorAll('.completed-checkbox');
+       checkboxes.forEach(function(checkbox) {
+           checkbox.checked = checkbox.checked ? false : true; // Toggle checkbox state
+           toggleRowSelection(checkbox); // Toggle row selection
+       });
+   }
 
-        // Send an AJAX request to update the database
+   function submitSelectedRows() {
+        var selectedRows = []; // Array to store selected row IDs
+
+        // Loop through all checkboxes with the class "completed-checkbox"
+        var checkboxes = document.querySelectorAll('.completed-checkbox');
+        checkboxes.forEach(function(checkbox) {
+            // If checkbox is checked, add its data-rowid attribute to selectedRows array
+            if (checkbox.checked) {
+                selectedRows.push(checkbox.getAttribute('data-rowid'));
+            }
+        });
+
+        // Send only the selected row IDs to the server
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'AJAX/UpdateLockout.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    // Request successful, alert the response
-                    // alert(xhr.responseText);
+                    // alert("Response from server: " + xhr.responseText);
+                    window.location.reload();
                 } else {
                     // Error handling
                     alert("Error: " + xhr.statusText);
                 }
             }
         };
-        xhr.send('rowId=' + rowId);
-    });
-});
+        xhr.send(JSON.stringify(selectedRows));
+    }
+
+
+
 
 
 

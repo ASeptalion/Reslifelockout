@@ -23,23 +23,33 @@ $result_UserInfo = UserInfo($con, $User);
 $row_UserInfo = mysqli_fetch_assoc($result_UserInfo);
 $Position = $row_UserInfo['Position'];
 
-// Check if rowId is set
-if (isset($_POST['rowId'])) {
-    $rowId = $_POST['rowId'];
+$data = json_decode(file_get_contents('php://input'), true);
 
-    // Update the database
+// Check if data is received and is an array
+if (is_array($data)) {
+    // Initialize success counter
+    $successCount = 0;
+
+    // Prepare and execute the update query for each selected row ID
     $query = "UPDATE Lockouts SET Processed = 1 WHERE id = ?";
     $stmt = $con->prepare($query);
-    $stmt->bind_param("i", $rowId);
-    if ($stmt->execute()) {
-        echo "success";
-    } else {
-        header("HTTP/1.1 500 Internal Server Error");
-        echo "Error updating database: " . $stmt->error;
+
+    foreach ($data as $rowId) {
+        // Bind parameters and execute query
+        $stmt->bind_param("i", $rowId);
+        if ($stmt->execute()) {
+            $successCount++;
+        } else {
+            // Log errors if necessary
+        }
     }
+
+    // Close statement
     $stmt->close();
+
+    // Return success message
+    echo "Complete";
 } else {
-    header("HTTP/1.1 400 Bad Request");
-    echo "Missing rowId parameter";
+    echo "No data received from client or data is not an array.";
 }
 ?>
